@@ -15,19 +15,32 @@ try:
             return(next(my_reader, None))
         
 except FileNotFoundError as error_message:
-    print(error_message)
+    import pdb;pdb.set_trace()
     
 
 
 
-def check_unique_duplicate(numpy_array):
+def count_unique_duplicate(numpy_array):
     unique_list, duplicate_list = [], []
-    for i in range(13):
+    row, column = numpy_array.size
+    for i in range(column):
         unique, count = np.unique(numpy_array[:,i], axis=0, return_counts=True)
         unique_list.append(len(unique[count==1]))
         duplicate_list.append(len(unique[count>1]))
         return np.array(unique_list),np.array(duplicate_list)
 
+def gen_table(numpy_array, header, unique_count, duplicate_count):
+    stat_table = PrettyTable(header)
+    stat_table.add_row(np.append(np.array(["unique"]), unique_count))
+    stat_table.add_row(np.append(np.array(["duplicate"]), duplicate_count))
+    stat_table.add_row(np.append(np.array(["mean"]), np.mean(numpy_array, axis=0)))
+    stat_table.add_row(np.append(np.array(["S.D"]), np.std(numpy_array, axis=0)))
+    stat_table.add_row(np.append(np.array(["min"]), np.min(numpy_array, axis=0)))
+    stat_table.add_row(np.append(np.array(["max"]), np.max(numpy_array, axis=0)))
+    stat_table.add_row(np.append(np.array(["25%"]), np.percentile(numpy_array, 25, axis=0)))
+    stat_table.add_row(np.append(np.array(["50%"]), np.percentile(numpy_array, 50, axis=0)))
+    stat_table.add_row(np.append(np.array(["75%"]), np.percentile(numpy_array, 75, axis=0)))
+    return stat_table
 
 
 if __name__ == '__main__':
