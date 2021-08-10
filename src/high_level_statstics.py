@@ -7,21 +7,16 @@ try:
         marketing_np_array = np.genfromtxt(data_set, dtype=np.int64, delimiter=",",
                                        skip_header=1)
         marketing_np_array = np.delete(marketing_np_array, 0, axis=1)
-        #return marketing_np_array
+        return marketing_np_array 
 
-        # with open(data_set, "r") as file:
-        #     data = csv.reader(file, delimiter=',')
-        #     while True:
-        #     line = data.readline()
-        #     if not line.startswith('#'): break
-
-        # header = [e for e in line.strip().split('\t') if e]
-        # print(header)
-
-        marketing_np_array = np.genfromtxt(data_set, dtype=np.int64, delimiter=",",
-                                       skip_header=1)
-except:
-    print("Error found to read data")
+    def read_header(data_file):
+        with open(data_file, 'r') as file:
+            my_reader = csv.reader(file, delimiter=',')
+            return(next(my_reader, None))
+        
+except FileNotFoundError as error_message:
+    print(error_message)
+    
 
 
 
