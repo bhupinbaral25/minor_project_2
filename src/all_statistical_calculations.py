@@ -47,8 +47,6 @@ class StatisticalCalculations:
         upper_limit = self.get_first_quartile()-(1.5*iqr)
         lower_limit = self.get_third_quartile()+(1.5*iqr)
         outlier_percentage = []
-        print(upper_limit[0])
-        print(lower_limit[0])
         for column_values in range(len(self.headers)-1):
             count = 0
             for row_value in self.data_array[:, column_values]:

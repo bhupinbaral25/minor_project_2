@@ -1,5 +1,6 @@
 from prettytable import PrettyTable
 import numpy as np
+import pandas as pd
 
 
 def gen_table(csv_headers, stat_calc):
