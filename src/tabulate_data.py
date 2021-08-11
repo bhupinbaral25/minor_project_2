@@ -13,4 +13,5 @@ def gen_table(csv_headers, stat_calc):
     stat_table.add_row(np.append(np.array(["25%"]), stat_calc.get_first_quartile()))
     stat_table.add_row(np.append(np.array(["50%"]), stat_calc.get_second_quartile()))
     stat_table.add_row(np.append(np.array(["75%"]), stat_calc.get_third_quartile()))
+    stat_table.add_row(np.append(np.array(["outlier percentage"]), stat_calc.get_outlier_percentage()))
     return stat_table

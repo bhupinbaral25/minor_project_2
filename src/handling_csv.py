@@ -8,9 +8,8 @@ class HandlingCSV:
 
     def get_csv_elements(self):
         try:
-            marketing_np_array = np.genfromtxt(self.data_set, dtype=np.int64, delimiter=",")
+            marketing_np_array = np.genfromtxt(self.data_set, dtype=np.int64, delimiter=",", skip_header=True)
             marketing_np_array = np.delete(marketing_np_array, 0, axis=1)
-            print(marketing_np_array.dtype)
         except Exception as exp:
             print("Exception:{}".format(exp))
         else:
