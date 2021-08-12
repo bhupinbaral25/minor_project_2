@@ -3,3 +3,7 @@ dataset/
 
 #extra files
 extrafile/
+
+#pycache
+src/__pycache__/
+

@@ -4,6 +4,11 @@ import pandas as pd
 
 
 def gen_table(csv_headers, stat_calc):
+    """
+    :param csv_headers: a list of CSV headers
+    :param stat_calc:  object of StatisticalCalculations class
+    :return: object of PrettyTable
+    """
     stat_table = PrettyTable(csv_headers)
     stat_table.add_row(np.append(np.array(["unique"]), stat_calc.get_unique()))
     stat_table.add_row(np.append(np.array(["duplicate"]), stat_calc.get_duplicate()))

@@ -2,6 +2,12 @@ import numpy as np
 
 
 class StatisticalCalculations:
+    """
+    :param numpy_array: numpy array of elements of csv
+    :param headers: list of headers of csv
+    :functions: All are high level statistical calculation,
+                call using get_{func_name} eg. get_mean()
+    """
     def __init__(self, numpy_array, headers):
         self.data_array = numpy_array
         self.headers = headers
@@ -28,31 +34,31 @@ class StatisticalCalculations:
     def get_third_quartile(self):
         return np.percentile(self.data_array, .75, axis=self.axis)
 
+    def count_unique_duplicate(self):
+        unique_list, duplicate_list = [], []
+        for i in range(len(self.headers)-1):
+            elements_of_np_array, count = np.unique(self.data_array[:, i], axis=self.axis, return_counts=True)
+            unique_list.append(len(elements_of_np_array[count == 1]))
+            duplicate_list.append(len(elements_of_np_array[count > 1]))
+        return unique_list, duplicate_list
+
     def get_unique(self):
         return self.count_unique_duplicate()[0]
 
     def get_duplicate(self):
         return self.count_unique_duplicate()[1]
 
-    def count_unique_duplicate(self):
-        unique_list, duplicate_list = [], []
-        for i in range(len(self.headers)-1):
-            unique, count = np.unique(self.data_array[:, i], axis=self.axis, return_counts=True)
-            unique_list.append(len(unique[count == 1]))
-            duplicate_list.append(len(unique[count > 1]))
-        return unique_list, duplicate_list
-
     def get_outlier_percentage(self):
-        iqr = self.get_third_quartile() - self.get_first_quartile()
-        upper_limit = self.get_first_quartile()-(1.5*iqr)
-        lower_limit = self.get_third_quartile()+(1.5*iqr)
+        inter_quartile_range = self.get_third_quartile() - self.get_first_quartile()
+        upper_limit = self.get_first_quartile()-(1.5*inter_quartile_range)
+        lower_limit = self.get_third_quartile()+(1.5*inter_quartile_range)
         outlier_percentage = []
         for column_values in range(len(self.headers)-1):
-            count = 0
+            counter = 0
             for row_value in self.data_array[:, column_values]:
                 if (row_value > upper_limit[column_values]) | (row_value < lower_limit[column_values]):
-                    count += 1
-            single_outlier_percentage = np.round((count/len(self.data_array[:, column_values]) * 100))
+                    counter += 1
+            single_outlier_percentage = np.round((counter/len(self.data_array[:, column_values]) * 100))
             outlier_percentage.append(single_outlier_percentage)
         return outlier_percentage
 
